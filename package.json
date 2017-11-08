@@ -1,0 +1,32 @@
+{
+  "name": "tic-tac-tree",
+  "version": "0.0.0",
+  "description": "Tic Tac Toe game with a tree of possible movements",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.15.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thblckjkr/tic-tac-tree.git"
+  },
+  "keywords": [
+    "tic-tac-toe",
+    "game",
+    "cpp",
+    "nodejs",
+    "javascript",
+    "d3js",
+    "tree",
+    "dev"
+  ],
+  "author": "Teo Gonzalez Calzada (teo.gonzalez.c@hotmail.com)",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/thblckjkr/tic-tac-tree/issues"
+  }
+}
