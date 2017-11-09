@@ -1,22 +1,35 @@
 #include <nan.h>
 
+using namespace Nan;
 using namespace v8;
+using namespace std;
 
-void set(const Nan::FunctionCallbackInfo<Value>& info) {
+class Game : public ObjectWrap {
+public:
+  static void Init(Local<Object> exports);
+  static void Set(const Nan::FunctionCallbackInfo<Value>& info);
 
-  /* if (gamepad.Length() != 1) {
-    Nan::ThrowTypeError("Wrong number of arguments");
-    return;
-  } */
+private:
+  int gamepad[3];
+};
 
-  // Local<Object> pad = Nan::New(gamepad);
-  Local<Number> num = Nan::New(15 + 16);
-  info.GetReturnValue().Set(num);
+void Game::Set(const Nan::FunctionCallbackInfo<Value>& info) {
+  Local<Function> callback = info[0].As<Function>(); // For make callbacks
+  const unsigned argc = 1;
+
+  Local<Array> gamepad = New<v8::Array>(4);
+
+  for(int i = 0; i < 3; i++){
+      Nan::Set(gamepad, i, New<Number>(*((int *) 2)));
+  }
+  
+  v8::Local<v8::Value> argv[argc] = gamepad;
+  
+  Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, argc, argv );
 }
 
-void Init(Local<Object> exports) {
-  exports->Set(Nan::New("set").ToLocalChecked(),
-    Nan::New<v8::FunctionTemplate>(set)->GetFunction());
+void Game::Init(Local<Object> exports) {
+  exports->Set(Nan::New("set").ToLocalChecked(),Nan::New<v8::FunctionTemplate>(Game::Set)->GetFunction());
 }
 
-NODE_MODULE(addon, Init)
+NODE_MODULE(addon, Game::Init)

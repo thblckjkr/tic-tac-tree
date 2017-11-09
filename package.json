@@ -4,10 +4,13 @@
   "description": "Tic Tac Toe game with a tree of possible movements",
   "main": "server.js",
   "dependencies": {
-    "express": "~4.15.4"
+    "express": "~4.15.4",
+    "nan": "^2.7.0",
+    "node-gyp": "^3.6.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "cd lib && node-gyp rebuild",
     "start": "node server.js"
   },
   "repository": {
@@ -24,7 +27,7 @@
     "tree",
     "dev"
   ],
-  "author": "Teo Gonzalez Calzada (teo.gonzalez.c@hotmail.com)",
+  "author": "Teo Gonzalez Calzada | thblckjkr <teo.gonzalez.c@hotmail.com>",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/thblckjkr/tic-tac-tree/issues"
