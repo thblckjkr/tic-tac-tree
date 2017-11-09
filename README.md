@@ -21,6 +21,6 @@ To run the program you can only do
 
 	node servers.js OR npm run start
 
-The program it's previously compiled with
+The program need's to be previously compiled with
 
 	npm run compile
