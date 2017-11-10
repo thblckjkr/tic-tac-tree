@@ -14,7 +14,7 @@ private:
 };
 
 void Game::Set(const Nan::FunctionCallbackInfo<Value>& info) {
-  Local<Function> callback = info[0].As<Function>(); // For make callbacks
+  Local<Function> callback = info.As<Function>(); // For make callbacks
   const unsigned argc = 1;
 
   Local<Array> gamepad = New<v8::Array>(4);
