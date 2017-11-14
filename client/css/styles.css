@@ -40,8 +40,22 @@ body {
 
 /*game-container*/
 #game-container{
-	width: 45rem;
-	height: 45rem;
 	background-color: #f1f1f1;
 	border-radius: 15px;
+	margin: 0 auto 20px;
+}
+.layer-item{
+	fill: #f1f1f1;
+	stroke: #8a8a8a;
+	stroke-width: 8px;
+	cursor: pointer;
+	transition-property: all;
+	transition-duration: 0.5s;
+}
+.layer-item:hover{
+	fill: #c3c3c3;
+}
+.layer-text{
+	stroke: #000;
+	cursor: pointer;
 }

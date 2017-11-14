@@ -11,6 +11,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
 	crossorigin="anonymous">
 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+   crossorigin="anonymous"></script>
+
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -20,22 +23,33 @@
 		<nav>
 			<ul class="nav nav-pills float-right">
 				<li class="nav-item">
-					<a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link active" href="#game">Game</a>
 				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#possibilities">Map</a>
+				</li>
+
 			</ul>
 		</nav>
 		<h3 class="text-muted">tic-tac-tree</h3>
 	</header>
 
-	<main role="main">
+	<main role="main" id="game">
 		<h1 class="text-center">
 			tic-tac-tree
 			<br>
 			<small>A weird tic-tac-toe with a visual aid</small>
 		</h1>
 
-		<div id="game-container">
+		<div id="game-container" style="width: 500px; height: 500px;">
 		</div>
+	</main>
+
+	<hr>
+
+	<main id="possibilities">
+		Hola!
 	</main>
 
 	<footer class="footer">
@@ -44,19 +58,24 @@
 
 	<!-- /container -->
 </div>
+<script>
+$(document).ready(function(){
+	var game = new Game();
+	game.init();
+})
+</script>
 
 <!-- Required JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS at last script -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-   crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
    crossorigin="anonymous"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
    crossorigin="anonymous"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script src="js/game-client.js"></script>
+
 </body>
 
 </html>
