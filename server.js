@@ -8,13 +8,17 @@ var port = config.service.port;
 
 // Files to client
 var filesRoute = __dirname + "/client/";
+
+var gamepad = [
+	[0, 0, 0],
+	[0, 0, 0],
+	[0, 0, 0]
+]
+
+var game = require('./lib/build/Release/game');
+console.log(game.test(gamepad));
+
 /*
-var gameng = require('./lib/build/Release/game');
-gameng.set(function (gamepad) {
-	console.log("Response received");
-	console.log(gamepad);
-})
-*/
 
 // Initialize http server on specified port
 app.listen(port, function () {
@@ -32,3 +36,4 @@ app.get('/css/styles.css', function (req, res) {
 app.get('/js/game-client.js', function (req, res) {
 	res.sendFile("js/game-client.js", { root: filesRoute });
 });
+*/

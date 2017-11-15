@@ -4,32 +4,59 @@ using namespace Nan;
 using namespace v8;
 using namespace std;
 
-class Game : public ObjectWrap {
+//This it's already a class, so no needs to make a Game class
+/*
+class node {
+  int[3][3] _data;
 public:
-  static void Init(Local<Object> exports);
-  static void Set(const Nan::FunctionCallbackInfo<Value>& info);
-
-private:
-  int gamepad[3];
-};
-
-void Game::Set(const Nan::FunctionCallbackInfo<Value>& info) {
-  Local<Function> callback = info.As<Function>(); // For make callbacks
-  const unsigned argc = 1;
-
-  Local<Array> gamepad = New<v8::Array>(4);
-
-  for(int i = 0; i < 3; i++){
-      Nan::Set(gamepad, i, New<Number>(*((int *) 2)));
+  node* parent;
+  node(int[3][3] data){
+    _data = data;
+    parent = NULL;
   }
-  
-  v8::Local<v8::Value> argv[argc] = gamepad;
-  
-  Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, argc, argv );
 }
 
-void Game::Init(Local<Object> exports) {
-  exports->Set(Nan::New("set").ToLocalChecked(),Nan::New<v8::FunctionTemplate>(Game::Set)->GetFunction());
+class tree {
+  public:
+    tree();
+    ~tree();
+    void insert(int key);
+
+  private:
+    node *root;
+    void insert(int key, node *leaf);
+
 }
 
-NODE_MODULE(addon, Game::Init)
+tree::tree(){
+  root = NULL;
+}*/
+
+void getTree(const v8::FunctionCallbackInfo<v8::Value>&args) {
+  Isolate* isolate = args.GetIsolate();
+  
+  //v8::HandleScope handle_scope;
+  Handle<Object> tree = Object::New(isolate);
+
+  
+  // Create the array
+  Local<Array> gamepad = Local<Array>::Cast(args[0]);
+  // unsigned int rows = gamepad.Length();
+  
+  tree->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "root") );
+  tree->Set( String::NewFromUtf8(isolate, "data"), gamepad );
+  //tree->Set( String::New("children"), Array::New(gamepad) );
+
+  
+  // Send back the gamepad
+  args.GetReturnValue().Set(tree);
+}
+
+void Initialize(v8::Local<v8::Object> exports) {
+  NODE_SET_METHOD(exports, "test", getTree);
+  /* Callback initializations
+  exports->Set(Nan::New("NameFunction").ToLocalChecked(),
+  Nan::New<v8::FunctionTemplate>(NameFunction)->GetFunction());*/
+}
+
+NODE_MODULE(addon, Initialize)
