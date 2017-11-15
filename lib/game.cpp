@@ -4,39 +4,16 @@ using namespace Nan;
 using namespace v8;
 using namespace std;
 
-//This it's already a class, so no needs to make a Game class
-/*
-class node {
-  int[3][3] _data;
-public:
-  node* parent;
-  node(int[3][3] data){
-    _data = data;
-    parent = NULL;
-  }
-}
-
-class tree {
-  public:
-    tree();
-    ~tree();
-    void insert(int key);
-
-  private:
-    node *root;
-    void insert(int key, node *leaf);
-
-}
-
-tree::tree(){
-  root = NULL;
-}*/
+Local<Array> makeMove(Isolate* isolate, Local<Array> gamepad );
+void getTree(const v8::FunctionCallbackInfo<v8::Value>&args);
 
 void getTree(const v8::FunctionCallbackInfo<v8::Value>&args) {
   Isolate* isolate = args.GetIsolate();
   
   //v8::HandleScope handle_scope;
   Handle<Object> tree = Object::New(isolate);
+
+  Handle<Object> child = Object::New(isolate);
 
   
   // Create the array
@@ -45,11 +22,27 @@ void getTree(const v8::FunctionCallbackInfo<v8::Value>&args) {
   
   tree->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "root") );
   tree->Set( String::NewFromUtf8(isolate, "data"), gamepad );
-  //tree->Set( String::New("children"), Array::New(gamepad) );
+
+  child->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "X on up-left") );
+  child->Set( String::NewFromUtf8(isolate, "data"), makeMove(isolate, gamepad) );
+
+  tree->Set( String::NewFromUtf8(isolate, "children"), child );
 
   
   // Send back the gamepad
   args.GetReturnValue().Set(tree);
+}
+
+Local<Array> makeMove(Isolate* isolate, Local<Array> gamepad ){
+
+  Local<Array> row = Array::New(isolate);
+  row->Set(0, gamepad->Get(0));
+
+  if( (int)row->Get(0)->Int32Value() == 0 ){
+    row->Set(0, Integer::New(isolate, 1));
+  }
+  gamepad->Set( 0, row );
+  return gamepad;
 }
 
 void Initialize(v8::Local<v8::Object> exports) {
