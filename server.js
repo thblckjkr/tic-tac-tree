@@ -16,7 +16,7 @@ var gamepad = [
 ]
 
 var game = require('./lib/build/Release/game');
-console.log(game.test(gamepad).children.data);
+console.log(game.getTree(gamepad));
 
 /*
 

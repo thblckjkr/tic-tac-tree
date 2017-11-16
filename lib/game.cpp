@@ -1,13 +1,18 @@
-#include <nan.h>
+#include <node.h>
+#include "game.h"
+#include "tree.h"
 
-using namespace Nan;
-using namespace v8;
-using namespace std;
+void getTree(const v8::FunctionCallbackInfo<v8::Value>&args){
+  // Isolate* isolate = args.GetIsolate(); // Get the isolate adress
 
-Local<Array> makeMove(Isolate* isolate, Local<Array> gamepad );
-void getTree(const v8::FunctionCallbackInfo<v8::Value>&args);
+  // Get the gamepad sent
+  Local<Array> gamepad = Local<Array>::Cast(args[0]);
 
-void getTree(const v8::FunctionCallbackInfo<v8::Value>&args) {
+  Tree* tree = new Tree(gamepad);
+  args.GetReturnValue().Set(tree->GetData());
+}
+
+void getTree2(const v8::FunctionCallbackInfo<v8::Value>&args) {
   Isolate* isolate = args.GetIsolate();
   
   //v8::HandleScope handle_scope;
@@ -35,8 +40,7 @@ void getTree(const v8::FunctionCallbackInfo<v8::Value>&args) {
 
 Local<Array> makeMove(Isolate* isolate, Local<Array> gamepad ){
 
-  Local<Array> row = Array::New(isolate);
-  row->Set(0, gamepad->Get(0));
+  Local<Array> row = Local<Array>::Cast(gamepad->Get(0));
 
   if( (int)row->Get(0)->Int32Value() == 0 ){
     row->Set(0, Integer::New(isolate, 1));
@@ -46,10 +50,10 @@ Local<Array> makeMove(Isolate* isolate, Local<Array> gamepad ){
 }
 
 void Initialize(v8::Local<v8::Object> exports) {
-  NODE_SET_METHOD(exports, "test", getTree);
+  NODE_SET_METHOD(exports, "getTree", getTree);
   /* Callback initializations
   exports->Set(Nan::New("NameFunction").ToLocalChecked(),
   Nan::New<v8::FunctionTemplate>(NameFunction)->GetFunction());*/
 }
 
-NODE_MODULE(addon, Initialize)
+NODE_MODULE(addon, Initialize);
