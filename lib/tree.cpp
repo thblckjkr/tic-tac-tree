@@ -9,17 +9,23 @@ Node::Node(Local<Array> data){
 	_data = Local<Array>::Cast(data);
 }
 
-Node::Node(vector<Node> children, Local<Array> data){
-	this->childs = &children;
-	_data = Local<Array>::Cast(data);
-}
+Local<Object> Node::GetChildren(int depth){
+	//v8::HandleScope handle_scope;
+	Handle<Object> node = Object::New(isolate);
 
-void Node::SetChildren(vector<Node> children){
-	this->childs = &children;
-}
+	node->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "anything") );
 
-vector<Node>* Node::GetChildren(){
-	return this->childs;
+	node->Set( String::NewFromUtf8(isolate, "data"), this->_data );
+	  
+	Handle<Array> children = Array::New(isolate, MAXNODES);
+	for(int i = 0; i < MAXNODES -1; i++){
+		if( childs[i] == NULL ){
+			node->Set( String::NewFromUtf8(isolate, "children"), children );
+			return node;
+		}
+		children->Set(i, childs[i]->GetChildren(depth));
+	}
+	return node;
 }
 
 Local<Array> Node::GetData(){
@@ -32,11 +38,15 @@ Tree::Tree(Local<Array> data){
 	root = temp;
 }
 
-void Tree::SetRoot(Local<Array> data){
-	//Node temp* = new Node(data);
-	//root = temp;
-}
+Local<Object> Tree::GetObject(){
+	//v8::HandleScope handle_scope;
+	Local<Object> tree = Object::New(isolate);
 
-Local<Array> Tree::GetData(){
-	return root->GetData();
+	tree->Set( String::NewFromUtf8(isolate, "name"),String::NewFromUtf8(isolate, "original"));
+
+	tree->Set( String::NewFromUtf8(isolate, "data"), root->GetData() );
+
+	tree->Set( String::NewFromUtf8(isolate, "children"), root->GetChildren(0) );
+
+	return tree;
 }

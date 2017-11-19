@@ -9,7 +9,7 @@ void getTree(const v8::FunctionCallbackInfo<v8::Value>&args){
   Local<Array> gamepad = Local<Array>::Cast(args[0]);
 
   Tree* tree = new Tree(gamepad);
-  args.GetReturnValue().Set(tree->GetData());
+  args.GetReturnValue().Set(tree->GetObject());
 }
 
 void getTree2(const v8::FunctionCallbackInfo<v8::Value>&args) {
