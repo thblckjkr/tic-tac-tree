@@ -16,15 +16,14 @@ var gamepad = [
 ]
 
 var game = require('./lib/build/Release/game');
-
+var TODO = game.getTree(gamepad);
 // Initialize http server on specified port
 app.listen(port, function () {
 	console.log('[tic-tac-tree server] listening on  *: ' + port);
 });
 
 app.get('/api/tree', function (req, res) {
-	var tree = game.getTree(gamepad);
-	var data = JSON.stringify(tree);
+	var data = JSON.stringify(TODO);
 
 	res.setHeader('Content-Type', 'application/json');
 	res.send(data);

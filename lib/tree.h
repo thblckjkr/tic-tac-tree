@@ -19,7 +19,7 @@ struct Node {
 private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 
-	Local<Array> _data = Array::New(isolate);
+	Local<Array> _data;
 	Node *childs[MAXNODES] = { NULL };
 public:
 

@@ -5,7 +5,8 @@ Node::Node(){
 }
 
 Node::Node(Local<Array> data){
-	_data = Local<Array>::Cast(data);
+	// Local<Array> _data = Array::New(isolate);
+	_data = data;
 }
 
 Local<Array> Node::GetData(){
@@ -17,10 +18,10 @@ Local<Object> Node::GetObject(){
 
 	node->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "node") );
 
-	node->Set( String::NewFromUtf8(isolate, "data"), this->_data );
+	node->Set( String::NewFromUtf8(isolate, "data"), this->GetData() );
 
 	Local<Array> children = Array::New(isolate, MAXNODES);
-	for(int i = 0; i < MAXNODES -1; i++){
+	for(int i = 0; i < MAXNODES - 1; i++){
 		if( childs[i] != NULL ){
 			children->Set(i, childs[i]->GetObject());
 		}
@@ -33,9 +34,8 @@ Local<Object> Node::GetObject(){
 
 void Node::MakeMoves(int next){
 	Isolate* isolate = v8::Isolate::GetCurrent();
-	Local<Array> row = Array::New(isolate);
-	Node *tempNode;
 
+	Local<Array> row = Array::New(isolate);
 	Local<Array> gamepad = Array::New(isolate);
 	Local<Array> tempRow = Array::New(isolate);
 
@@ -44,25 +44,24 @@ void Node::MakeMoves(int next){
 
 	for(int i = 0; i < 3; i++){
 		// Get row by row
-		row = Local<Array>::Cast(this->_data->Get(i));
+		row = Local<Array>::Cast(this->GetData()->Get(i));
 		
 		for(int j = 0; j < 3; j++){
-			if( (int)row->Get(j)->Int32Value() == 0 ){
-				gamepad = Local<Array>::Cast(this->_data); // Create Locale
-				
-				tempRow = Local<Array>::Cast(gamepad->Get(i));
-
-				tempRow->Set( j, Integer::New(isolate, next));
-				gamepad->Set( i, tempRow );
-
-				tempNode = new Node(gamepad);
-
-				tempNode->MakeMoves(nextMove);
-
-				this->childs[counter] = tempNode;
-
-				counter++;
+			if( (int)row->Get(j)->Int32Value() != 0 ){
+				continue;
 			}
+
+			// Create a temporal array, modify it and add to data
+			gamepad = Local<Array>::Cast(this->GetData()); 
+			tempRow = Local<Array>::Cast(gamepad->Get(i));
+
+			tempRow->Set( j, Integer::New(isolate, next));
+			gamepad->Set( i, tempRow );
+
+			this->childs[counter] = new Node(gamepad);
+			this->childs[counter]->MakeMoves(nextMove);
+
+			counter = counter + 1;
 		}
 	}
 }
