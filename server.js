@@ -16,13 +16,19 @@ var gamepad = [
 ]
 
 var game = require('./lib/build/Release/game');
-console.log(game.getTree(gamepad));
-
-/*
 
 // Initialize http server on specified port
 app.listen(port, function () {
 	console.log('[tic-tac-tree server] listening on  *: ' + port);
+});
+
+app.get('/api/tree', function (req, res) {
+	var tree = game.getTree(gamepad);
+	var data = JSON.stringify(tree);
+
+	res.setHeader('Content-Type', 'application/json');
+	res.send(data);
+	res.end();
 });
 
 app.get('/', function (req, res) {
@@ -36,4 +42,3 @@ app.get('/css/styles.css', function (req, res) {
 app.get('/js/game-client.js', function (req, res) {
 	res.sendFile("js/game-client.js", { root: filesRoute });
 });
-*/

@@ -19,14 +19,15 @@ struct Node {
 private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 
-	Local<Array> _data = Array::New(isolate);
+	Handle<Array> _data = Array::New(isolate);
 	Node* childs[MAXNODES] = { NULL };
 public:
 
 	Node(); //For init
 	Node(Local<Array> data); //Root node (?)
 
-	Local<Object> GetChildren(int depth);
+	void MakeMoves(int next);
+	Local<Object> GetObject();
 	Local<Array> GetData();
 	void Insert(Local<Array> node);
 };
@@ -42,4 +43,5 @@ public:
 	Tree(Local<Array> data);
 	void Insert(Local<Array> data);
 	Local<Object> GetObject();
+	void MakeMoves(int next);
 };
