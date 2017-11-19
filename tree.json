@@ -1,0 +1,303 @@
+{
+  "tree": {
+    "name": "node",
+    "data": [
+      [
+        1,
+        2,
+        1
+      ],
+      [
+        2,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        1
+      ]
+    ],
+    "children": [
+      {
+        "name": "node",
+        "data": [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            1
+          ]
+        ],
+        "children": [
+          {
+            "name": "node",
+            "data": [
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                2,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                1
+              ]
+            ],
+            "children": [
+              {
+                "name": "node",
+                "data": [
+                  [
+                    1,
+                    2,
+                    1
+                  ],
+                  [
+                    2,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    2,
+                    1
+                  ]
+                ],
+                "children": [
+                  {
+                    "name": "node",
+                    "data": [
+                      [
+                        1,
+                        2,
+                        1
+                      ],
+                      [
+                        2,
+                        1,
+                        2
+                      ],
+                      [
+                        1,
+                        2,
+                        1
+                      ]
+                    ],
+                    "children": [
+                      {
+                        "name": "node",
+                        "data": [
+                          [
+                            1,
+                            2,
+                            1
+                          ],
+                          [
+                            2,
+                            1,
+                            2
+                          ],
+                          [
+                            1,
+                            2,
+                            1
+                          ]
+                        ],
+                        "children": [
+                          {
+                            "name": "node",
+                            "data": [
+                              [
+                                1,
+                                2,
+                                1
+                              ],
+                              [
+                                2,
+                                1,
+                                2
+                              ],
+                              [
+                                1,
+                                2,
+                                1
+                              ]
+                            ],
+                            "children": [
+                              {
+                                "name": "node",
+                                "data": [
+                                  [
+                                    1,
+                                    2,
+                                    1
+                                  ],
+                                  [
+                                    2,
+                                    1,
+                                    2
+                                  ],
+                                  [
+                                    1,
+                                    2,
+                                    1
+                                  ]
+                                ],
+                                "children": [
+                                  {
+                                    "name": "node",
+                                    "data": [
+                                      [
+                                        1,
+                                        2,
+                                        1
+                                      ],
+                                      [
+                                        2,
+                                        1,
+                                        2
+                                      ],
+                                      [
+                                        1,
+                                        2,
+                                        1
+                                      ]
+                                    ],
+                                    "children": [
+                                      {
+                                        "name": "node",
+                                        "data": [
+                                          [
+                                            1,
+                                            2,
+                                            1
+                                          ],
+                                          [
+                                            2,
+                                            1,
+                                            2
+                                          ],
+                                          [
+                                            1,
+                                            2,
+                                            1
+                                          ]
+                                        ],
+                                        "children": [
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null
+                                        ]
+                                      },
+                                      null,
+                                      null,
+                                      null,
+                                      null,
+                                      null,
+                                      null,
+                                      null,
+                                      null
+                                    ]
+                                  },
+                                  null,
+                                  null,
+                                  null,
+                                  null,
+                                  null,
+                                  null,
+                                  null,
+                                  null
+                                ]
+                              },
+                              null,
+                              null,
+                              null,
+                              null,
+                              null,
+                              null,
+                              null,
+                              null
+                            ]
+                          },
+                          null,
+                          null,
+                          null,
+                          null,
+                          null,
+                          null,
+                          null,
+                          null
+                        ]
+                      },
+                      null,
+                      null,
+                      null,
+                      null,
+                      null,
+                      null,
+                      null,
+                      null
+                    ]
+                  },
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  }
+}
