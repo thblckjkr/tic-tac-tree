@@ -19,9 +19,10 @@ struct Node {
 private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 
-	Local<Array> _data;
-	Node *childs[MAXNODES] = { NULL };
 public:
+	Local<Array> data;
+
+	Node *childs[MAXNODES] = { NULL };
 
 	Node(); //For init
 	Node(Local<Array> data); //Root node (?)
@@ -29,7 +30,6 @@ public:
 	void MakeMoves(int next);
 	Local<Object> GetObject();
 	Local<Array> GetData();
-	void Insert(Local<Array> node);
 };
 
 

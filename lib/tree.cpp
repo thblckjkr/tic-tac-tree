@@ -4,13 +4,13 @@
 Node::Node(){
 }
 
-Node::Node(Local<Array> data){
-	// Local<Array> _data = Array::New(isolate);
-	_data = data;
+Node::Node(Local<Array> gamepad){
+	// Local<Array> data = Array::New(isolate);
+	data = gamepad;
 }
 
 Local<Array> Node::GetData(){
-	return this->_data;
+	return data;
 }
 
 Local<Object> Node::GetObject(){
@@ -18,9 +18,9 @@ Local<Object> Node::GetObject(){
 
 	node->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "node") );
 
-	node->Set( String::NewFromUtf8(isolate, "data"), this->GetData() );
+	node->Set( String::NewFromUtf8(isolate, "data"), data );
 
-	Local<Array> children = Array::New(isolate, MAXNODES);
+	Local<Array> children = Array::New(isolate);
 	for(int i = 0; i < MAXNODES - 1; i++){
 		if( childs[i] != NULL ){
 			children->Set(i, childs[i]->GetObject());
@@ -44,7 +44,7 @@ void Node::MakeMoves(int next){
 
 	for(int i = 0; i < 3; i++){
 		// Get row by row
-		row = Local<Array>::Cast(this->GetData()->Get(i));
+		row = Local<Array>::Cast(data->Get(i));
 		
 		for(int j = 0; j < 3; j++){
 			if( (int)row->Get(j)->Int32Value() != 0 ){
@@ -52,13 +52,14 @@ void Node::MakeMoves(int next){
 			}
 
 			// Create a temporal array, modify it and add to data
-			gamepad = Local<Array>::Cast(this->GetData()); 
+			gamepad = Local<Array>::Cast(data);
 			tempRow = Local<Array>::Cast(gamepad->Get(i));
 
 			tempRow->Set( j, Integer::New(isolate, next));
 			gamepad->Set( i, tempRow );
 
-			this->childs[counter] = new Node(gamepad);
+			this->childs[counter] = new Node();
+			this->childs[counter]->data = gamepad;
 			this->childs[counter]->MakeMoves(nextMove);
 
 			counter = counter + 1;
@@ -66,8 +67,9 @@ void Node::MakeMoves(int next){
 	}
 }
 
-Tree::Tree(Local<Array> data){
-	root = new Node(data);
+Tree::Tree(Local<Array> gamepad){
+	root = new Node();
+	root->data = gamepad;
 }
 
 Local<Object> Tree::GetObject(){
