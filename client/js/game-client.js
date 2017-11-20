@@ -57,7 +57,10 @@ var Game = function () {
 	}
 }
 
-
+var Tree = function (options) {
+	this.contID = "tree-container" || options.contID;
+	
+}
 
 // D3.js drawer for the game
 var Drawer = function (game, options) {

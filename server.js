@@ -39,3 +39,7 @@ app.get('/css/styles.css', function (req, res) {
 app.get('/js/game-client.js', function (req, res) {
 	res.sendFile("js/game-client.js", { root: config.client.dir });
 });
+
+app.get('/js/game-client.js', function (req, res) {
+	res.sendFile("js/tree.js", { root: config.client.dir });
+});
