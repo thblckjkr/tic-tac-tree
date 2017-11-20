@@ -20,7 +20,7 @@ private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 
 public:
-	Local<Array> data;
+	Local<Array> _data;
 
 	Node *childs[MAXNODES] = { NULL };
 

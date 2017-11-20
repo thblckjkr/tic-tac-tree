@@ -6,24 +6,22 @@ var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('config/config.json', 'utf8'));
 var port = config.service.port;
 
-// Files to client
-var filesRoute = __dirname + "/client/";
-
 var gamepad = [
-	[0, 0, 0],
-	[0, 0, 0],
-	[0, 0, 0]
+	[1, 0, 0],
+	[0, 2, 0],
+	[1, 0, 0]
 ]
 
 var game = require('./lib/build/Release/game');
-var TODO = game.getTree(gamepad);
+
 // Initialize http server on specified port
 app.listen(port, function () {
 	console.log('[tic-tac-tree server] listening on  *: ' + port);
 });
 
 app.get('/api/tree', function (req, res) {
-	var data = JSON.stringify(TODO);
+	var tree = game.getTree(gamepad);
+	var data = JSON.stringify(tree);
 
 	res.setHeader('Content-Type', 'application/json');
 	res.send(data);
@@ -31,13 +29,13 @@ app.get('/api/tree', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-	res.sendFile("index.html", { root: filesRoute });
+	res.sendFile("index.html", { root: config.client.dir });
 });
 
 app.get('/css/styles.css', function (req, res) {
-	res.sendFile("css/styles.css", { root: filesRoute });
+	res.sendFile("css/styles.css", { root: config.client.dir });
 });
 
 app.get('/js/game-client.js', function (req, res) {
-	res.sendFile("js/game-client.js", { root: filesRoute });
+	res.sendFile("js/game-client.js", { root: config.client.dir });
 });

@@ -1,5 +1,8 @@
 {
 	"service" : {
 		"port" : "1234"
+	},
+	"client" : {
+		"dir" : "/home/lubuntu/Documents/Development/tic-tac-tree/client/"
 	}
 }

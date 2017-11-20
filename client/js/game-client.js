@@ -57,6 +57,8 @@ var Game = function () {
 	}
 }
 
+
+
 // D3.js drawer for the game
 var Drawer = function (game, options) {
 	options = options || {};
