@@ -37,9 +37,22 @@ I don't know how about performance, but it's so great for a homework
 
 Performance benchmarks
 
+```
 From:
 1 0 0
 0 0 0
 0 0 0
 
 GameConstruct: 159ms (21380 nodes)
+```
+
+```
+From:
+0 0 0
+0 1 0
+0 0 0
+
+GameConstruct: 454ms (55505 nodes)
+Stringify: 157ms
+
+```

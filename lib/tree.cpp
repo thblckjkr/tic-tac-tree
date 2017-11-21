@@ -60,7 +60,7 @@ X 0 0
 
 	// Winner by col
 	for(int i = 0; i < 3; i++ ){
-		if( data[0][i] != 0 &&  data[0][i] == data[1][i] && data[1][i] == data[1][i] ){
+		if( data[0][i] != 0 &&  data[0][i] == data[1][i] && data[1][i] == data[2][i] ){
 			winner = data[0][i];
 			return true;
 		}

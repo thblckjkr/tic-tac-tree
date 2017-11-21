@@ -1,4 +1,17 @@
-/** D3.js dependent game drawe **/
+/** D3.js and JQuery dependent game drawe **/
+function LoadModal(gamepad) {
+	var d = new Drawer({
+			separation: 7,
+			width: 500,
+			height: 500,
+			parentID: "posmodalgame",
+			contID: "posmodalgameContainer"
+	});
+	d.init();
+	d.draw(gamepad);
+	$('#posmodal').modal('show')
+}
+
 var Game = function () {
 	this.contID = "gamepad";
 	this.nextTurn = 1;
@@ -9,7 +22,7 @@ var Game = function () {
 			[0, 0, 0]
 		];
 
-	this.drawer = new Drawer(this,
+	this.drawer = new Drawer(
 		{
 			separation: 7,
 			width: 500,
@@ -88,7 +101,7 @@ var Game = function () {
 
 		// Winner by col
 		for (var i = 0; i < 3; i++ ){
-			if (this.gamepad[0][i] != 0 && this.gamepad[0][i] == this.gamepad[1][i] && this.gamepad[1][i] == this.gamepad[1][i]) {
+			if (this.gamepad[0][i] != 0 && this.gamepad[0][i] == this.gamepad[1][i] && this.gamepad[1][i] == this.gamepad[2][i]) {
 				winner = this.gamepad[0][i];
 				return winner;
 			}
@@ -99,14 +112,16 @@ var Game = function () {
 			return winner;
 		}
 
-		if (this.gamepad[2][0] != 0 && this.gamepad[0][2] == this.gamepad[1][1] && this.gamepad[1][1] == this.gamepad[2][0]) {
+		if (this.gamepad[0][2] != 0 && this.gamepad[0][2] == this.gamepad[1][1] && this.gamepad[1][1] == this.gamepad[2][0]) {
 			winner = this.gamepad[2][0];
 			return winner;
 		}
 
 		return false;
 	}
+
 	this.reset = function () {
+		var that = this;
 		this.nextTurn = 1;
 		this.gamepad = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 		$("#" + this.contID).html("");
@@ -117,39 +132,35 @@ var Game = function () {
 	}
 }
 
-var Tree = function (options) {
-	this.contID = "tree-container" || options.contID;
-	
-}
-
 // D3.js drawer for the game
-var Drawer = function (game, options) {
+var Drawer = function (options) {
 	options = options || {};
-	this.server = options.server || "10.19.9.222";
-	this.alive = false;
-	this.parentID = "game-container"
-	this.contID = "gamepad" || options.contID;
+	console.log(options);
+	this.parentID = options.parentID || "game-container";
+	this.contID = options.contID || "gamepad" ;
 	this.layout = null;
 	this.width = options.width || 720;
 	this.height = options.height || 720;
 	this.separation = options.separation || 0;
 
-	this.init = function (callback) {
+	this.init = function () {
 		var that = this;
 		$('#' + that.parentID).html('<div id="' + that.contID + '" style="width: ' + that.width + 'px; height: ' + that.height + 'px;"></div>');
 	}
 
 	this.draw = function (data) {
 		//http://jsfiddle.net/1gyjd2xt/4/
+		console.log("drawing", data, this.contID);
 		var that = this;
 		var svg = d3.select("#" + that.contID).append("svg")
 			.attr("width", that.width)
 			.attr("height", that.height);
-
+		
 		this.drawLayer(svg, data, null, { x: 0, y: 0, width: that.width, height: that.height, separation: that.separation });
 	}
 
 	this.drawLayer = function (svg, layer, next, base) {
+		console.log("drawing layer");
 		var cols = layer[0].length;
 		var rows = layer.length;
 
@@ -178,6 +189,26 @@ var Drawer = function (game, options) {
 					.attr("width", width)
 					.attr("height", height)
 					.attr("class", "layer-item");
+				
+				var fontSize = (width > height) ? height : width;
+				fontSize = fontSize - 4;
+
+				if (layer[r][c] != 0) {
+					var text = g.append("text")
+						.attr("class", "layer-text")
+						.attr("x", pos.x + (width / 2) - (fontSize / 3))
+						.attr("y", pos.y + (height / 2))
+						.attr('font-size', fontSize + 'px')
+						.attr("dy", "0.35em")
+						.text(function () {
+							switch (layer[r][c]) {
+								case 1:
+									return "X";
+								case 2:
+									return "O";
+							}
+						});
+					}
 
 				if (next && layer[r][c]) {
 					this.drawLayer(g, next, null, { x: pos.x, y: pos.y, width: width, height: height, separation: 0 })

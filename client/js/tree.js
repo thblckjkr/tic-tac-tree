@@ -1,5 +1,9 @@
 var Tree = function () {
 	this.draw = function (treeData) {
+		Xwin = 0;
+		Owin = 0;
+		totalNodes = 0;
+
 		treeData.parent = 0;
 		var margin = { top: 20, right: 10, bottom: 20, left: 10 },
 			width = 706 - margin.right - margin.left,
@@ -50,27 +54,21 @@ var Tree = function () {
 			nodeEnter.append("circle")
 				.attr("r", function (d) { return 7; })
 				.style("fill", function (d) { 
+					totalNodes++;
 					switch (d.winner) {
-						case 0:
-							return "#3674A8"
-						case 1:
-							return "#36A84B"
-						case 2:
-							return "#A83636"	
+						case 0: return "#3674A8"
+						case 1: Xwin++; return "#36A84B"
+						case 2: Owin++; return "#A83636"	
 					}
-				 });
-			
-			/*nodeEnter.append("text")
-				.attr("x", function (d) {
-					return d.children || d._children ?
-						(d.value + 4) * -1 : d.value + 4
 				})
-				.attr("dy", ".35em")
-				.attr("text-anchor", function (d) {
-					return d.children || d._children ? "end" : "start";
+				.style("stroke", function (d) {
+					switch (d.winner) {
+						case 0: return "#3674A8"
+						case 1: return "#36A84B"
+						case 2: return "#A83636"
+					}
 				})
-				.text(function (d) { return d.name; })
-				.style("fill-opacity", 1);*/
+				.on("click", nodeClick);
 
 			// Declare the links…
 			var link = svg.selectAll("path.link")
@@ -81,6 +79,12 @@ var Tree = function () {
 				.attr("class", "link")
 				// .style("stroke", fun kction (d) { return d.target.level; })
 				.attr("d", diagonal);
+			
+			d3.select('#possibilitiesCount').html("<b>X wins</b>:" + Xwin + " | <b>O wins:</b>" + Owin + " | <b>Total nodes:</b>" + totalNodes);
+		}
+
+		function nodeClick(d) {
+			LoadModal(d.gamepad);
 		}
 	}
 }
