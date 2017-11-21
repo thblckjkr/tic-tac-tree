@@ -55,3 +55,23 @@ app.get('/js/game-client.js', function (req, res) {
 app.get('/js/tree.js', function (req, res) {
 	res.sendFile("js/tree.js", { root: config.client.dir });
 });
+
+app.get('/css/bootstrap.min.css', function (req, res) {
+	res.sendFile("css/bootstrap.min.css", { root: config.client.dir });
+});
+
+app.get('/js/jquery-3.2.1.min.js', function (req, res) {
+	res.sendFile("js/jquery-3.2.1.min.js", { root: config.client.dir });
+});
+
+app.get('/js/bootstrap.min.js', function (req, res) {
+	res.sendFile("js/bootstrap.min.js", { root: config.client.dir });
+});
+
+app.get('/js/d3.v3.min.js', function (req, res) {
+	res.sendFile("js/d3.v3.min.js", { root: config.client.dir });
+});
+
+app.get('/js/popper.min.js', function (req, res) {
+	res.sendFile("js/popper.min.js", { root: config.client.dir });
+});
