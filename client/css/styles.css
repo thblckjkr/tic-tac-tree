@@ -77,3 +77,7 @@ body {
 	stroke: #ccc;
 	stroke-width: 1.5px;
 }
+
+#tree-container{
+	background-color: #f3f3f3;
+}

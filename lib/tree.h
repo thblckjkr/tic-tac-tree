@@ -30,13 +30,13 @@ public:
 	void MakeMoves(int next);
 	Local<Object> GetObject();
 	Local<Array> GetData();
+	void Destroy(); // Recursively destroy nodes
 };
 
 
 struct Tree { 
 private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
-
 	Node *root;
 public:
 	Tree();
@@ -44,4 +44,5 @@ public:
 	void Insert(Local<Array> data);
 	Local<Object> GetObject();
 	void MakeMoves(int next);
+	void Clean();
 };

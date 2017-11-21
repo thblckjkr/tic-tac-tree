@@ -6,12 +6,6 @@ var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('config/config.json', 'utf8'));
 var port = config.service.port;
 
-var gamepad = [
-	[1, 0, 0],
-	[0, 2, 0],
-	[1, 0, 0]
-]
-
 var game = require('./lib/build/Release/game');
 
 // Initialize http server on specified port
@@ -20,6 +14,16 @@ app.listen(port, function () {
 });
 
 app.get('/api/tree', function (req, res) {
+	if (typeof(req.query.gamepad) !== "undefined") {
+		gamepad = JSON.parse(req.query.gamepad);	
+	} else {
+		gamepad = [
+			[0, 0, 0],
+			[0, 2, 0],
+			[0, 0, 0]
+		]
+	}
+
 	var tree = game.getTree(gamepad);
 	var data = JSON.stringify(tree);
 
@@ -40,6 +44,6 @@ app.get('/js/game-client.js', function (req, res) {
 	res.sendFile("js/game-client.js", { root: config.client.dir });
 });
 
-app.get('/js/game-client.js', function (req, res) {
+app.get('/js/tree.js', function (req, res) {
 	res.sendFile("js/tree.js", { root: config.client.dir });
 });

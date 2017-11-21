@@ -18,16 +18,18 @@ Local<Object> Node::GetObject(){
 
 	node->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "node") );
 
-	node->Set( String::NewFromUtf8(isolate, "data"), this->GetData() );
-
-	Local<Array> children = Array::New(isolate, MAXNODES);
-	for(int i = 0; i < MAXNODES - 1; i++){
-		if( childs[i] != NULL ){
-			children->Set(i, childs[i]->GetObject());
+	node->Set( String::NewFromUtf8(isolate, "gamepad"), this->GetData() );
+	// node->Set( String::NewFromUtf8(isolate, "parent"), String::NewFromUtf8(isolate, "node") );
+	if(childs[0] != NULL){
+		Local<Array> children = Array::New(isolate);
+		for(int i = 0; i < MAXNODES - 1; i++){
+			if( childs[i] != NULL ){
+				children->Set(i, childs[i]->GetObject());
+			}
 		}
-	}
 
-	node->Set( String::NewFromUtf8(isolate, "children"), children );
+		node->Set( String::NewFromUtf8(isolate, "children"), children );
+	}
 	
 	return node;
 }
@@ -61,7 +63,18 @@ void Node::MakeMoves(int next){
 			this->childs[counter] = new Node(gamepad);
 			this->childs[counter]->MakeMoves(nextMove);
 
-			counter = counter + 1;
+			counter++;
+		}
+	}
+}
+
+void Node::Destroy(){
+	if(childs[0] != NULL){
+		for(int i = 0; i < MAXNODES - 1; i++){
+			if( childs[i] != NULL ){
+				childs[i]->Destroy();
+				free(childs[i]);
+			}
 		}
 	}
 }
@@ -74,6 +87,11 @@ Local<Object> Tree::GetObject(){
 	Local<Object> tree = Object::New(isolate);
 	tree->Set( String::NewFromUtf8(isolate, "tree"), root->GetObject());
 	return tree;
+}
+
+void Tree::Clean(){
+	root->Destroy();
+	free(root);
 }
 
 void Tree::MakeMoves(int next){

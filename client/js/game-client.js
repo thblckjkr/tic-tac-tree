@@ -16,11 +16,12 @@ var Game = function () {
 			height: 500
 		}
 	);
-	
+
 	this.init = function () {
 		var that = this;
+		this.tree = new Tree();
 		this.drawer.init();
-		this.drawer.draw(this.gamepad, { contID : this.contID });
+		this.drawer.draw(this.gamepad, { contID: this.contID });
 		//Also set the show function of modals on click
 		d3.select("#" + this.contID).selectAll(".layer-item").on('click', function () {
 			that.move(this);
@@ -28,6 +29,7 @@ var Game = function () {
 	}
 
 	this.move = function (item) {
+		var that = this;
 		var data = {
 			col: $(item.parentNode).attr("col"),
 			row: $(item.parentNode).attr("row")
@@ -39,6 +41,17 @@ var Game = function () {
 
 		this.gamepad[data.row][data.col] = this.nextTurn;
 		this.drawer.drawMove(this.getMove(this.nextTurn), item, this.gamepad);
+		
+		// Asynchronous get&draw all moves from each move
+		$.ajax({
+			url: "/api/tree",
+			data: {
+				gamepad: JSON.stringify(that.gamepad)
+			},
+			success: function(response){
+				that.tree.draw(response.tree);
+			}
+		})
 
 		this.nextTurn = (this.nextTurn == 1) ? 2 : 1;
 	}

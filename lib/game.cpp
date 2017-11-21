@@ -7,12 +7,13 @@ void getTree(const v8::FunctionCallbackInfo<v8::Value>&args){
 
   // Get the gamepad sent
   Local<Array> gamepad = Local<Array>::Cast(args[0]);
-
+  
   Tree *tree = new Tree(gamepad);
 
   tree->MakeMoves(1); // Set the nodes data
 
   args.GetReturnValue().Set(tree->GetObject());
+  tree->Clean();
 }
 
 void Initialize(v8::Local<v8::Object> exports) {
