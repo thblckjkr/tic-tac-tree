@@ -8,6 +8,14 @@ var port = config.service.port;
 
 var game = require('./lib/build/Release/game');
 
+gamepad = [
+	[0, 0, 0],
+	[0, 2, 0],
+	[0, 0, 0]
+]
+
+game.getTree(gamepad, 1);
+
 // Initialize http server on specified port
 app.listen(port, function () {
 	console.log('[tic-tac-tree server] listening on  *: ' + port);

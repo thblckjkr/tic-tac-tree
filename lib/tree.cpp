@@ -9,8 +9,26 @@ Node::Node(Local<Array> data){
 	_data = data;
 }
 
+Node::Node(int init[3][3]){
+	for(int i=0; i <3; i++){
+		for(int j=0; j <3; j++){
+			this->data[i][j] = init[i][j];
+		}
+	}
+}
+
 Local<Array> Node::GetData(){
-	return this->_data;
+	Local<Array> gamepad = Array::New(isolate,3);
+
+	for(int i = 0; i < 3; i++){
+		Local<Array> row = Array::New(isolate,3);
+		for(int j = 0; j < 3; j++){
+			row->Set(j, Integer::New(isolate, data[i][j]));
+		}
+		gamepad->Set(i, row);
+	}
+
+	return gamepad;
 }
 
 Local<Object> Node::GetObject(){
@@ -35,35 +53,29 @@ Local<Object> Node::GetObject(){
 }
 
 void Node::MakeMoves(int next){
-	Isolate* isolate = v8::Isolate::GetCurrent();
-
-	Local<Array> row = Array::New(isolate);
-	Local<Array> gamepad = Array::New(isolate);
-	Local<Array> tempRow = Array::New(isolate);
-
-	int counter = 0;
+	int counter = -1;
+	int gamepad[3][3] = { { 0 } };
 	int nextMove = ( next == 1 ) ? 2 : 1;
 
 	for(int i = 0; i < 3; i++){
-		// Get row by row
-		row = Local<Array>::Cast(this->GetData()->Get(i));
-		
 		for(int j = 0; j < 3; j++){
-			if( (int)row->Get(j)->Int32Value() != 0 ){
-				continue;
+
+			// A lot of unneficient, i know. But i am short of time
+			for(int xi = 0; xi < 3; xi++){
+				for(int xj = 0; xj < 3; xj++){
+					gamepad[xi][xj] = data[xi][xj];
+				}
 			}
 
-			// Create a temporal array, modify it and add to data
-			gamepad = Local<Array>::Cast(this->GetData()); 
-			tempRow = Local<Array>::Cast(gamepad->Get(i));
+			if(data[i][j] == 0){
+				counter ++;
 
-			tempRow->Set( j, Integer::New(isolate, next));
-			gamepad->Set( i, tempRow );
+				gamepad[i][j] = next;
 
-			this->childs[counter] = new Node(gamepad);
-			this->childs[counter]->MakeMoves(nextMove);
+				this->childs[counter] = new Node(gamepad);
+				this->childs[counter]->MakeMoves(nextMove);
+			}
 
-			counter++;
 		}
 	}
 }
@@ -80,6 +92,10 @@ void Node::Destroy(){
 }
 
 Tree::Tree(Local<Array> data){
+	root = new Node(data);
+}
+
+Tree::Tree(int data[3][3]){
 	root = new Node(data);
 }
 

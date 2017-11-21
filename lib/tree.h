@@ -21,11 +21,13 @@ private:
 
 public:
 	Local<Array> _data;
+	int data[3][3] = { { 0 } };
 
 	Node *childs[MAXNODES] = { NULL };
 
 	Node(); //For init
 	Node(Local<Array> data); //Root node (?)
+	Node(int init[3][3]); //Root node (?)
 
 	void MakeMoves(int next);
 	Local<Object> GetObject();
@@ -41,6 +43,7 @@ private:
 public:
 	Tree();
 	Tree(Local<Array> data);
+	Tree(int data[3][3]);
 	void Insert(Local<Array> data);
 	Local<Object> GetObject();
 	void MakeMoves(int next);
