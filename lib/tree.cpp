@@ -2,11 +2,7 @@
 #include "tree.h"
 
 Node::Node(){
-}
 
-Node::Node(Local<Array> data){
-	// Local<Array> _data = Array::New(isolate);
-	_data = data;
 }
 
 Node::Node(int init[3][3]){
@@ -29,6 +25,55 @@ Local<Array> Node::GetData(){
 	}
 
 	return gamepad;
+}
+
+bool Node::IsWinner(){
+/*
+To not overload tree
+check if is winner the node
+
+Data winners
+X X X <- Winner by row (i to 3)
+0 0 0
+0 0 0
+-----
+X 0 0 <- Winner by col (i to 3)
+X 0 0
+X 0 0
+-----
+0 0 X <- Winner by diag x2
+0 X 0
+X 0 0
+
+X 0 0
+0 X 0
+0 0 X
+*/
+
+	// Winner by row
+	for(int i = 0; i < 3; i++ ){
+		if( data[i][0] != 0 && data[i][0] == data[i][1] && data[i][1] == data[i][2] ){
+			return true;
+		}
+	}
+
+	// Winner by col
+	for(int i = 0; i < 3; i++ ){
+		if( data[0][i] != 0 &&  data[0][i] == data[1][i] && data[1][i] == data[1][i] ){
+			return true;
+		}
+	}
+
+	if( data[0][0] != 0 && data[0][0] == data[1][1] && data[1][1] == data[2][2]){
+		return true;
+	}
+
+	if(data[2][0] != 0 && data[0][2] == data[1][1] && data[1][1] == data[2][0]){
+		return true;
+	}
+
+	return false;
+
 }
 
 Local<Object> Node::GetObject(){
@@ -56,6 +101,11 @@ void Node::MakeMoves(int next){
 	int counter = -1;
 	int gamepad[3][3] = { { 0 } };
 	int nextMove = ( next == 1 ) ? 2 : 1;
+
+	if(this->IsWinner()){
+		// Do not continue because is a dead end
+		return ;
+	}
 
 	for(int i = 0; i < 3; i++){
 		for(int j = 0; j < 3; j++){
@@ -89,10 +139,6 @@ void Node::Destroy(){
 			}
 		}
 	}
-}
-
-Tree::Tree(Local<Array> data){
-	root = new Node(data);
 }
 
 Tree::Tree(int data[3][3]){

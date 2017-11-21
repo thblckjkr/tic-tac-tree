@@ -20,18 +20,17 @@ private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 
 public:
-	Local<Array> _data;
 	int data[3][3] = { { 0 } };
 
 	Node *childs[MAXNODES] = { NULL };
 
 	Node(); //For init
-	Node(Local<Array> data); //Root node (?)
 	Node(int init[3][3]); //Root node (?)
 
 	void MakeMoves(int next);
 	Local<Object> GetObject();
 	Local<Array> GetData();
+	bool IsWinner();
 	void Destroy(); // Recursively destroy nodes
 };
 
@@ -40,9 +39,9 @@ struct Tree {
 private:
 	Isolate* isolate = v8::Isolate::GetCurrent();
 	Node *root;
+
 public:
 	Tree();
-	Tree(Local<Array> data);
 	Tree(int data[3][3]);
 	void Insert(Local<Array> data);
 	Local<Object> GetObject();
