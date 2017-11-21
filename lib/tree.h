@@ -21,6 +21,7 @@ private:
 
 public:
 	int data[3][3] = { { 0 } };
+	int winner = 0;
 
 	Node *childs[MAXNODES] = { NULL };
 

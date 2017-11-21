@@ -53,6 +53,7 @@ X 0 0
 	// Winner by row
 	for(int i = 0; i < 3; i++ ){
 		if( data[i][0] != 0 && data[i][0] == data[i][1] && data[i][1] == data[i][2] ){
+			winner = data[i][0];
 			return true;
 		}
 	}
@@ -60,15 +61,18 @@ X 0 0
 	// Winner by col
 	for(int i = 0; i < 3; i++ ){
 		if( data[0][i] != 0 &&  data[0][i] == data[1][i] && data[1][i] == data[1][i] ){
+			winner = data[0][i];
 			return true;
 		}
 	}
 
 	if( data[0][0] != 0 && data[0][0] == data[1][1] && data[1][1] == data[2][2]){
+		winner = data[0][0];
 		return true;
 	}
 
 	if(data[2][0] != 0 && data[0][2] == data[1][1] && data[1][1] == data[2][0]){
+		winner = data[2][0];
 		return true;
 	}
 
@@ -82,6 +86,10 @@ Local<Object> Node::GetObject(){
 	node->Set( String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, "node") );
 
 	node->Set( String::NewFromUtf8(isolate, "gamepad"), this->GetData() );
+
+	Local<Integer> win = Integer::New(isolate, winner);
+
+	node->Set( String::NewFromUtf8(isolate, "winner"), win );
 	// node->Set( String::NewFromUtf8(isolate, "parent"), String::NewFromUtf8(isolate, "node") );
 	if(childs[0] != NULL){
 		Local<Array> children = Array::New(isolate);

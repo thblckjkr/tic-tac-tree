@@ -40,20 +40,28 @@ var Game = function () {
 		}
 
 		this.gamepad[data.row][data.col] = this.nextTurn;
-		this.drawer.drawMove(this.getMove(this.nextTurn), item, this.gamepad);
-		
-		// Asynchronous get&draw all moves from each move
-		$.ajax({
-			url: "/api/tree",
-			data: {
-				gamepad: JSON.stringify(that.gamepad)
-			},
-			success: function(response){
-				that.tree.draw(response.tree);
-			}
-		})
 
+		if (this.IsWinner()) {
+			alert("There is a winner!: Winner" + this.getMove(this.IsWinner()));
+			this.reset();
+		}
+
+		this.drawer.drawMove(this.getMove(this.nextTurn), item, this.gamepad);
 		this.nextTurn = (this.nextTurn == 1) ? 2 : 1;
+		
+		if ($('#draw').is(":checked")) {
+		// Asynchronous get&draw all moves from each move
+			$.ajax({
+				url: "/api/tree",
+				data: {
+					gamepad: JSON.stringify(that.gamepad),
+					next: that.nextTurn
+				},
+				success: function (response) {
+					that.tree.draw(response.tree);
+				}
+			});
+		}
 	}
 
 	this.getMove = function (data) {
@@ -67,6 +75,45 @@ var Game = function () {
 				t = "O"; break;
 		}
 		return t;
+	}
+
+	this.IsWinner = function () {
+		// Winner by row
+		for (var i = 0; i < 3; i++ ){
+			if (this.gamepad[i][0] != 0 && this.gamepad[i][0] == this.gamepad[i][1] && this.gamepad[i][1] == this.gamepad[i][2]) {
+				winner = this.gamepad[i][0];
+				return winner;
+			}
+		}
+
+		// Winner by col
+		for (var i = 0; i < 3; i++ ){
+			if (this.gamepad[0][i] != 0 && this.gamepad[0][i] == this.gamepad[1][i] && this.gamepad[1][i] == this.gamepad[1][i]) {
+				winner = this.gamepad[0][i];
+				return winner;
+			}
+		}
+
+		if (this.gamepad[0][0] != 0 && this.gamepad[0][0] == this.gamepad[1][1] && this.gamepad[1][1] == this.gamepad[2][2]) {
+			winner = this.gamepad[0][0];
+			return winner;
+		}
+
+		if (this.gamepad[2][0] != 0 && this.gamepad[0][2] == this.gamepad[1][1] && this.gamepad[1][1] == this.gamepad[2][0]) {
+			winner = this.gamepad[2][0];
+			return winner;
+		}
+
+		return false;
+	}
+	this.reset = function () {
+		this.nextTurn = 1;
+		this.gamepad = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+		$("#" + this.contID).html("");
+		this.drawer.draw(this.gamepad, { contID: this.contID });
+		d3.select("#" + this.contID).selectAll(".layer-item").on('click', function () {
+			that.move(this);
+		});
 	}
 }
 

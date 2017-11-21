@@ -36,10 +36,9 @@ var Tree = function () {
 			// Normalize for fixed-depth.
 			nodes.forEach(function (d) { d.y = d.depth * 180; });
 
-			console.log(nodes);
 			// Declare the nodes…
 			var node = svg.selectAll("g.node")
-				.data(nodes, function (d) { return d.id || (d.id = ++i);});
+				.data(nodes, function (d) { return d.id || (d.id = ++i); });
 
 			// Enter the nodes.
 			var nodeEnter = node.enter().append("g")
@@ -50,6 +49,16 @@ var Tree = function () {
 
 			nodeEnter.append("circle")
 				.attr("r", function (d) { return 7; })
+				.style("fill", function (d) { 
+					switch (d.winner) {
+						case 0:
+							return "#3674A8"
+						case 1:
+							return "#36A84B"
+						case 2:
+							return "#A83636"	
+					}
+				 });
 			
 			/*nodeEnter.append("text")
 				.attr("x", function (d) {

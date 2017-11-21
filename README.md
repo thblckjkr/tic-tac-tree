@@ -34,3 +34,12 @@ Basically, the cpp addon (powered with `nan`) get's a two dimentional array (the
 Then populates it to a v8 Object and then it return's the tree
 
 I don't know how about performance, but it's so great for a homework
+
+Performance benchmarks
+
+From:
+1 0 0
+0 0 0
+0 0 0
+
+GameConstruct: 159ms (21380 nodes)

@@ -21,7 +21,7 @@ void getTree(const v8::FunctionCallbackInfo<v8::Value>&args){
   
   Tree *tree = new Tree(gamepad);
 
-  tree->MakeMoves(1); // Set the nodes data
+  tree->MakeMoves(next); // Set the nodes data
 
   args.GetReturnValue().Set(tree->GetObject());
   // tree->Clean();
