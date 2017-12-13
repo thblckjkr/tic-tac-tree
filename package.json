@@ -1,6 +1,6 @@
 {
   "name": "tic-tac-tree",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Tic Tac Toe game with a tree of possible movements",
   "main": "server.js",
   "dependencies": {

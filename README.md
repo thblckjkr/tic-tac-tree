@@ -17,6 +17,13 @@ The tree it's generated with C++, send across NodeJS and rendered with D3js.
 
 	Creation of files, folders and things
 
+## Interesting things founds ##
+In a empty game there are
+
+**116532** ways to win for the one who start
+**70008**  ways to win for the one who goes second
+**490241** possible movements
+
 ## Usage ##
 
 To run the program you can only do 
