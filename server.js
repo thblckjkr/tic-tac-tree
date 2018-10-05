@@ -1,18 +1,20 @@
 // Libraries
-// HTTP socket (server) requirements
-var app = require('express')();
-	
+	// HTTP socket (server) requirements
+	var app = require('express')();
+
+	// Build of cpp extension
+	var game = require('./lib/build/Release/game');
+
 var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('config/config.json', 'utf8'));
 var port = config.service.port;
-
-var game = require('./lib/build/Release/game');
 
 // Initialize http server on specified port
 app.listen(port, function () {
 	console.log('[tic-tac-tree server] listening on  *: ' + port);
 });
 
+// Construct the game on the extension and send the results
 app.get('/api/tree', function (req, res) {
 	if (typeof(req.query.gamepad) !== "undefined") {
 		gamepad = JSON.parse(req.query.gamepad);	
@@ -40,38 +42,14 @@ app.get('/api/tree', function (req, res) {
 	res.end();
 });
 
-app.get('/', function (req, res) {
-	res.sendFile("index.html", { root: config.client.dir });
-});
-
-app.get('/css/styles.css', function (req, res) {
-	res.sendFile("css/styles.css", { root: config.client.dir });
-});
-
-app.get('/js/game-client.js', function (req, res) {
-	res.sendFile("js/game-client.js", { root: config.client.dir });
-});
-
-app.get('/js/tree.js', function (req, res) {
-	res.sendFile("js/tree.js", { root: config.client.dir });
-});
-
-app.get('/css/bootstrap.min.css', function (req, res) {
-	res.sendFile("css/bootstrap.min.css", { root: config.client.dir });
-});
-
-app.get('/js/jquery-3.2.1.min.js', function (req, res) {
-	res.sendFile("js/jquery-3.2.1.min.js", { root: config.client.dir });
-});
-
-app.get('/js/bootstrap.min.js', function (req, res) {
-	res.sendFile("js/bootstrap.min.js", { root: config.client.dir });
-});
-
-app.get('/js/d3.v3.min.js', function (req, res) {
-	res.sendFile("js/d3.v3.min.js", { root: config.client.dir });
-});
-
-app.get('/js/popper.min.js', function (req, res) {
-	res.sendFile("js/popper.min.js", { root: config.client.dir });
+// Server the files as are required by the client
+app.get('/*', function(req, res){ 
+	var name = "";
+	switch(req.originalUrl){
+		case "/":
+			name = "index.html"; break;
+		default:
+			name = req.originalUrl; break;
+	}
+	res.sendFile( config.client.dir + name);
 });

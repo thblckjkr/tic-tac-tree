@@ -3,6 +3,6 @@
 		"port" : "1234"
 	},
 	"client" : {
-		"dir" : "/home/lubuntu/Documents/Development/tic-tac-tree/client/"
+		"dir" : "/home/thblckjkr/teogo/source/repos/tic-tac-tree/client/"
 	}
 }

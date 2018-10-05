@@ -9,20 +9,35 @@ The tree it's generated with C++, send across NodeJS and rendered with D3js.
 	npm 		v2.15.0
 	node-gyp	v3.6.2
 
-## Changelog ##
+## Changelog 
 
 - v0.0 Initial release
 
 	Creation of files, folders and things
 
-## Interesting things founds ##
+## Interesting things founds 
 In a empty game there are
 
 **116532** ways to win for the one who start
 **70008**  ways to win for the one who goes second
 **490241** possible movements
 
-## Usage ##
+## Installing
+
+After cloning from github
+
+git clone https://github.com/thblckjkr/tic-tac-tree
+
+cd tic-tac-tree
+
+sudo apt-get install make
+sudo apt-get install g++
+
+npm run compile
+
+npm install
+
+## Usage 
 
 To run the program you can only do 
 
@@ -32,7 +47,7 @@ The program need's to be previously compiled with
 
 	npm run compile
 
-## How it works ##
+## How it works 
 
 Basically, the cpp addon (powered with `nan`) get's a two dimentional array (the gamepad) , and creates a n-ary tree structure with the possible movements.
 
