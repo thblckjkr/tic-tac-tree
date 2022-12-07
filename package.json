@@ -4,7 +4,7 @@
   "description": "Tic Tac Toe game with a tree of possible movements",
   "main": "server.js",
   "dependencies": {
-    "express": "~4.15.4",
+    "express": "~4.17.3",
     "nan": "^2.7.0",
     "node-gyp": "^3.6.2"
   },
